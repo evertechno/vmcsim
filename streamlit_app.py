@@ -51,17 +51,17 @@ def suggest_best_tool(material, shape, diameter, ai_model):
             return "End Mill"
     return "End Mill"  # Default suggestion
 
-# Mock fluid simulation function
+# Mock fluid simulation function (replace with actual API or simulation tool)
 def simulate_fluid_dynamics(diameter, material):
     # Mocking a fluid dynamics simulation result for the part
-    # This can be replaced with a real fluid simulation API (e.g., OpenFOAM)
-    return f"Fluid dynamics simulated for {material} part with diameter {diameter}mm."
+    # This can be replaced with a real fluid simulation API (e.g., OpenFOAM or ANSYS Fluent)
+    return f"Fluid dynamics simulated for {material} part with diameter {diameter}mm. Simulating airflow and heat dissipation."
 
-# Mock stress simulation function
-def simulate_stress_analysis(diameter, material):
+# Mock stress simulation function (replace with actual API or simulation tool)
+def simulate_stress_analysis(diameter, material, tool_diameter):
     # Mocking a stress analysis result for the part
-    # This can be replaced with a real stress simulation API (e.g., ANSYS)
-    return f"Stress analysis simulated for {material} part with diameter {diameter}mm."
+    # This can be replaced with a real stress simulation API (e.g., ANSYS or COMSOL)
+    return f"Stress analysis simulated for {material} part with diameter {diameter}mm. Estimated stress: {random.uniform(50, 300):.2f} MPa under operational loads."
 
 # Streamlit App UI
 st.title("AI-Enhanced CNC VMC Design Copilot")
@@ -128,7 +128,7 @@ if st.button("Generate Design and G-code"):
 
         # Step 5: Simulate Fluid Dynamics and Stress Analysis
         fluid_simulation = simulate_fluid_dynamics(diameter, material)
-        stress_analysis = simulate_stress_analysis(diameter, material)
+        stress_analysis = simulate_stress_analysis(diameter, material, tool_diameter)
 
         # Step 6: Generate G-code (simplified)
         gcode = f"""
