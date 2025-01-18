@@ -51,6 +51,18 @@ def suggest_best_tool(material, shape, diameter, ai_model):
             return "End Mill"
     return "End Mill"  # Default suggestion
 
+# Mock fluid simulation function
+def simulate_fluid_dynamics(diameter, material):
+    # Mocking a fluid dynamics simulation result for the part
+    # This can be replaced with a real fluid simulation API (e.g., OpenFOAM)
+    return f"Fluid dynamics simulated for {material} part with diameter {diameter}mm."
+
+# Mock stress simulation function
+def simulate_stress_analysis(diameter, material):
+    # Mocking a stress analysis result for the part
+    # This can be replaced with a real stress simulation API (e.g., ANSYS)
+    return f"Stress analysis simulated for {material} part with diameter {diameter}mm."
+
 # Streamlit App UI
 st.title("AI-Enhanced CNC VMC Design Copilot")
 st.write("Use Generative AI to design CNC VMC models and generate optimized G-code files with enhanced AI-driven features.")
@@ -114,7 +126,11 @@ if st.button("Generate Design and G-code"):
         # Step 4: AI-driven Tool Life Estimation
         tool_life = estimate_tool_life(cutting_force, tool_diameter, ai_model)
 
-        # Step 5: Generate G-code (simplified)
+        # Step 5: Simulate Fluid Dynamics and Stress Analysis
+        fluid_simulation = simulate_fluid_dynamics(diameter, material)
+        stress_analysis = simulate_stress_analysis(diameter, material)
+
+        # Step 6: Generate G-code (simplified)
         gcode = f"""
         G21 ; Set units to mm
         G17 ; Select XY plane
@@ -124,7 +140,7 @@ if st.button("Generate Design and G-code"):
         M30 ; End of program
         """
 
-        # Step 6: Handle file generation for CAD (mocked content)
+        # Step 7: Handle file generation for CAD (mocked content)
         gcode_filename = f"part_{diameter}x{height}_gcode.gcode"
         with open(gcode_filename, 'w') as file:
             file.write(gcode)
@@ -133,7 +149,7 @@ if st.button("Generate Design and G-code"):
         with open(cad_filename, 'w') as file:
             file.write(f"CAD file for {material} part with diameter {diameter}mm and height {height}mm.")
 
-        # Step 7: Provide download links
+        # Step 8: Provide download links
         st.write("Design Generation and Toolpath Complete!")
         st.download_button(label="Download G-code", data=open(gcode_filename, "rb").read(), file_name=gcode_filename, mime="application/gcode")
         st.download_button(label="Download CAD Model (STEP format)", data=open(cad_filename, "rb").read(), file_name=cad_filename, mime="application/step")
@@ -141,6 +157,8 @@ if st.button("Generate Design and G-code"):
         # Display advanced AI-driven features
         st.write(f"AI Estimated Cutting Force: {cutting_force:.2f} N")
         st.write(f"AI Estimated Tool Life: {tool_life:.2f} hours based on AI modeling.")
+        st.write(fluid_simulation)
+        st.write(stress_analysis)
 
     except Exception as e:
         st.error(f"Error: {e}")
